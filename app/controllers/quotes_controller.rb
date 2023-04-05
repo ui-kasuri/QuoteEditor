@@ -17,10 +17,13 @@ class QuotesController < ApplicationController
     # @quote = Quote.new(quote_params)
     @quote = current_company.quotes.build(quote_params)
 
+    # We use flash.now[:notice] here and not flash[:notice] because
+    # Turbo Stream responses don't redirect to other locations,
+    # so the flash has to appear on the page right now
     if @quote.save
       respond_to do |format|
         format.html { redirect_to quotes_path, notice: "Quote was successfully created." }
-        format.turbo_stream
+        format.turbo_stream { flash.now[:notice] = "Quote was successfully created." }
       end
     else
       render :new, status: :unprocessable_entity
@@ -31,7 +34,10 @@ class QuotesController < ApplicationController
 
   def update
     if @quote.update(quote_params)
-      redirect_to quotes_path, notice: 'Quotes was successfully updated.'
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "Quote was successfully updated." }
+        format.turbo_stream { flash.now[:notice] = "Quote was successfully updated." }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -42,8 +48,9 @@ class QuotesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to quotes_path, notice: "Quote was successfully destroyed." }
-      format.turbo_stream
-    end  end
+      format.turbo_stream { flash.now[:notice] = "Quote was successfully destroyed." }
+    end
+  end
 
   private
 
