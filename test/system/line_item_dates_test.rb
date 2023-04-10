@@ -15,24 +15,17 @@ class LineItemSystemTest < ApplicationSystemTestCase
     visit quote_path(@quote)
   end
 
-  test "Creating a new line item" do
+  test "Creating a new line item date" do
     assert_selector "h1", text: "First quote"
 
-    within "##{dom_id(@line_item_date)}" do
-      click_on "Add item", match: :first
-    end
+    click_on "New date"
     assert_selector "h1", text: "First quote"
+    fill_in "Date", with: Date.current + 1.day
 
-    fill_in "Name", with: "Animation"
-    fill_in "Quantity", with: 1
-    fill_in "Unit price", with: 1234
-    click_on "Create item"
-
-    assert_selector "h1", text: "First quote"
-    assert_text "Animation"
-    assert_text number_to_currency(1234)
+    click_on "Create date"
+    assert_text I18n.l(Date.current + 1.day, format: :long)
   end
-  
+
   test "Updating a line item date" do
     assert_selector "h1", text: "First quote"
 
@@ -58,5 +51,6 @@ class LineItemSystemTest < ApplicationSystemTestCase
     end
 
     assert_no_text I18n.l(Date.current, format: :long)
+    assert_text number_to_currency(@quote.total_price)
   end
 end
