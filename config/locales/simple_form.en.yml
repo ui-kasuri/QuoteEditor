@@ -1,14 +1,21 @@
+# config/locales/simple_form.en.yml
+
 en:
   simple_form:
-    placeholder:
+    placeholders:
       quote:
         name: Name of your quote
     labels:
       quote:
         name: Name
+      line_item_date:
+        date: Date
 
   helpers:
     submit:
       quote:
         create: Create quote
         update: Update quote
+      line_item_date:
+        create: Create date
+        update: Update date
