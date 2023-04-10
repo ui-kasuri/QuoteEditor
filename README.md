@@ -1,24 +1,11 @@
-# README
+# Installation
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+This gem is automatically configured for applications made with Rails 7+ (unless --skip-hotwire is passed to the generator). But if you're on Rails 6, you can install it manually:
 
-* Ruby version
+* Add the turbo-rails gem to your Gemfile: gem 'turbo-rails'
+* Run ```bash ./bin/bundle install```
+* Run ```bash./bin/rails turbo:install ```
+* Run ```bash ./bin/rails turbo:install:redis ``` to change the development Action Cable adapter from Async (the default one) to Redis. The Async adapter does not support Turbo Stream broadcasting.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Running ```bash  turbo:install``` will install through NPM if Node.js is used in the application. Otherwise the asset pipeline version is used. To use the asset pipeline version, you must have importmap-rails installed first and listed higher in the Gemfile.
